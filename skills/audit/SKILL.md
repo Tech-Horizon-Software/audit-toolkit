@@ -17,7 +17,13 @@ handed to anyone.
 
 ```bash
 pwd && git rev-parse --show-toplevel && git branch --show-current && git status --short | head -20
+"${CLAUDE_PLUGIN_ROOT}/scripts/check-tooling.sh"
 ```
+
+The second command lists the optional specialists (`pr-review-toolkit`, `claude-security`,
+`typescript-lsp`, `context7`) as `present` or `MISSING`, and which static tools are on `PATH`.
+Keep the result: Step 1 offers to install what is missing, and the report's Coverage
+limitations names what stayed missing.
 
 You audit the repository the session is open in. If the user named a different path, say that you
 audit only the current directory and ask them to relaunch there — do not `cd` into someone
@@ -49,8 +55,34 @@ recommended instead. From the answer on, speak that language — see `LANGUAGE` 
    (`origin/main`, `origin/dev`, …) if not given; resolve a PR with `gh` when available.
 3. **One area** — a directory, module or set of files, every phase.
 
+**Question 3 — Specialists** (header `Specialists`, multi-select) — **only if Step 0 reported
+any `MISSING` plugin.** One option per missing plugin, label = plugin name, description = what
+the audit loses without it:
+
+- `pr-review-toolkit` — correctness, silent failures, type design, test analysis (phases 3, 9, 10);
+- `claude-security` — the security scan (phase 4);
+- `typescript-lsp` — diagnostics, references and call chains for TypeScript;
+- `context7` — version-specific library behaviour instead of memory.
+
 Write the option labels and descriptions in English for this first question — the language
 is not known yet.
+
+**After the answers.** For each specialist the user selected, run
+
+```bash
+claude plugin install <name>@claude-plugins-official
+```
+
+and record the exit status. If any install succeeded, say in `LANGUAGE`: which were installed,
+that a running session does not load new plugins by itself, and ask the user to run
+`/reload-plugins` (or restart with the same launch command) and then say "continue". **Wait.**
+When they do, re-run `${CLAUDE_PLUGIN_ROOT}/scripts/check-tooling.sh` and go on. If they
+declined, or an install failed, go on without it — the gap goes to Coverage limitations, never
+into a second offer.
+
+Static tools the stack needs but `PATH` lacks (`terraform`, `tflint`, `tfsec`/`trivy`,
+`checkov`) are system packages: name them and the usual install command for the platform, do
+not install them.
 
 Then one fixed confirmation, in the chosen language, skipped only when the request already
 accepted it in words (English wording; translate faithfully):
@@ -82,9 +114,9 @@ Do this yourself, cheaply, before any specialist:
    `tsconfig` strictness, husky/lint-staged, `.tflint.hcl`, `.pre-commit-config.yaml`, CI
    workflows — and whether CI actually runs tests on pull requests, or only deploys. If nothing
    checks pull requests, say so in the report: then the audit is the only check this code got.
-4. **Toolset.** `${CLAUDE_PLUGIN_ROOT}/scripts/check-tooling.sh`, then confirm at runtime the
-   specialists you intend to dispatch actually answer. Record both lists for Coverage
-   limitations.
+4. **Toolset.** Take the final `check-tooling.sh` result from Steps 0–1, then confirm at
+   runtime that the specialists you intend to dispatch actually answer (an enabled MCP plugin
+   can still fail to connect). Record both lists for Coverage limitations.
 5. **Baseline and revision.** `git rev-parse HEAD`; in diff mode also the base, the merge-base,
    `git diff --stat <merge-base>..<head>`, `--name-status`, `git log --oneline`. Review committed
    changes only; report uncommitted changes separately.
