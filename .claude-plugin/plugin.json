@@ -1,0 +1,19 @@
+{
+  "name": "audit-toolkit",
+  "version": "0.1.0",
+  "description": "Repository audit orchestrator for TypeScript (backend and frontend) and Terraform codebases. Runs an evidence-based, multi-agent review — correctness, security, performance, reliability, code style, tests — with independent verification of every serious finding and a single verdict. Delegates to pr-review-toolkit and claude-security when they are installed and says so when they are not.",
+  "author": {
+    "name": "serg-be-prog",
+    "email": "sergey.yurchenko.art@gmail.com"
+  },
+  "license": "MIT",
+  "keywords": [
+    "audit",
+    "code-review",
+    "security",
+    "performance",
+    "typescript",
+    "terraform",
+    "quality-gate"
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
+  "name": "audit-toolkit",
+  "description": "Self-hosted marketplace for the audit-toolkit plugin.",
+  "owner": {
+    "name": "serg-be-prog",
+    "email": "sergey.yurchenko.art@gmail.com"
+  },
+  "plugins": [
+    {
+      "name": "audit-toolkit",
+      "description": "Repository audit orchestrator for TypeScript and Terraform codebases: multi-agent review with independent verification and a single verdict.",
+      "category": "code-review",
+      "source": "./"
+    }
+  ]
+}
