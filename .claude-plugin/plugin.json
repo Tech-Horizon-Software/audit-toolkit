@@ -1,7 +1,7 @@
 {
   "name": "audit-toolkit",
-  "version": "0.1.3",
-  "description": "Repository audit orchestrator for TypeScript (backend and frontend) and Terraform codebases. Runs an evidence-based, multi-agent review — correctness, security, performance, reliability, code style, tests — with independent verification of every serious finding and a single verdict. Delegates to pr-review-toolkit and claude-security when they are installed and says so when they are not.",
+  "version": "0.1.4",
+  "description": "Repository audit for TypeScript (backend, frontend) and Terraform. Launch from inside the repo: claude --agent audit-toolkit:audit-orchestrator \"start\". Evidence-based multi-agent review — correctness, security, performance, reliability, code style, tests — with independent verification of every serious finding and a single verdict. Uses pr-review-toolkit and claude-security when installed and says so when not.",
   "author": {
     "name": "serg-be-prog",
     "email": "sergey.yurchenko.art@gmail.com"

@@ -1,5 +1,14 @@
 # audit-toolkit
 
+```bash
+# once
+claude plugin marketplace add Tech-Horizon-Software/audit-toolkit
+claude plugin install audit-toolkit@audit-toolkit
+
+# every audit — from inside the repository you want checked
+claude --agent audit-toolkit:audit-orchestrator "start"
+```
+
 A Claude Code plugin that audits **any** repository — a TypeScript backend, a TypeScript
 frontend, a Terraform project, or a mix. It is not tied to a project: it picks up the
 conventions of the repository it runs in and falls back to its own defaults where there are none.

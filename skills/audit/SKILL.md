@@ -1,6 +1,6 @@
 ---
 name: audit
-description: Audit a repository — a TypeScript backend or frontend, a Terraform project, or a mix — for correctness, security, performance, reliability, code style and tests, and end with one verdict and a report a person can read. Runs the full repository by default, or a diff (branch, PR, commit range) when asked. Best run as `claude --agent audit-toolkit:audit-orchestrator` from inside the repository; `/audit` in a plain session follows the same procedure in this session.
+description: Audit a repository — a TypeScript backend or frontend, a Terraform project, or a mix — for correctness, security, performance, reliability, code style and tests, and end with one verdict and a report a person can read. Whole repository by default, or a diff (branch, PR, commit range). Recommended launch, from inside the repository, in your terminal — claude --agent audit-toolkit:audit-orchestrator "start" — which gives the audit its own session, model and turn budget. Invoking this skill in a plain session follows the same procedure here.
 ---
 
 # Audit
@@ -24,9 +24,13 @@ audit only the current directory and ask them to relaunch there — do not `cd` 
 else's checkout.
 
 If this session is not running as the orchestrator agent (no `@audit-orchestrator` in the
-banner), say once that the full procedure is budgeted for `claude --agent
-audit-toolkit:audit-orchestrator` and works best there, then continue here anyway if the user
-wants — same procedure, same rules.
+banner), say once, verbatim:
+
+> The full audit works best in its own session. From this repository's root, in your terminal:
+> `claude --agent audit-toolkit:audit-orchestrator "start"`
+> I can also run it here, in this session, with the same procedure — say which.
+
+Wait for the answer. If they choose here, continue — same procedure, same rules.
 
 ## Step 1 — Language, job and scope (one interaction, at the very start)
 
