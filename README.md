@@ -14,12 +14,11 @@ opening the code.
 ## Install
 
 ```bash
-claude plugin marketplace add git@github.com:Tech-Horizon-Software/audit-toolkit.git
+claude plugin marketplace add Tech-Horizon-Software/audit-toolkit
 claude plugin install audit-toolkit@audit-toolkit
 ```
 
-The repository is private: you need an SSH key with access to `Tech-Horizon-Software` on
-`github.com` (check with `git ls-remote git@github.com:Tech-Horizon-Software/audit-toolkit.git`).
+The repository is public — no GitHub account or SSH key is needed to install.
 
 For local plugin development, point the marketplace at a path instead:
 
