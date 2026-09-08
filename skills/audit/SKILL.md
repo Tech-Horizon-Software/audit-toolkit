@@ -8,9 +8,10 @@ description: Audit a repository — a TypeScript backend or frontend, a Terrafor
 This is the procedure. The orchestrator agent (`audit-toolkit:audit-orchestrator`) fixes the
 mandate and the safety rules; this skill fixes what happens, in what order, and what comes out.
 
-`SUMMARY_LANGUAGE`: **English** by default. The summary at the top of the report and the
-terminal summary are written in it; the evidence sections are always English. If the user asks
-for another language at the start of the job, use it for the summary only.
+`LANGUAGE`: chosen by the user in Step 1 (default **English**). It governs everything you say to
+the user, the summary at the top of the report, and the terminal summary. The evidence sections
+of the report — finding IDs, code quotes, commands, paths — stay in English so the report can be
+handed to anyone.
 
 ## Step 0 — Where you are
 
@@ -27,17 +28,28 @@ banner), say once that the full procedure is budgeted for `claude --agent
 audit-toolkit:audit-orchestrator` and works best there, then continue here anyway if the user
 wants — same procedure, same rules.
 
-## Step 1 — Job and scope (one question, at the very start)
+## Step 1 — Language, job and scope (one interaction, at the very start)
 
-If the user's request already fixes these, do not ask. Otherwise ask **once**, with
-AskUserQuestion, single select:
+Ask **once**, with a single AskUserQuestion call carrying up to three questions. Drop any
+question the user's first message already answers.
+
+**Question 1 — Language** (header `Language`, single select): **English (Recommended)**,
+**Русский**, **Українська**. The user can type any other language via *Other*. If the first
+message was written in a language other than English, put that language first and mark it
+recommended instead. From the answer on, speak that language — see `LANGUAGE` above.
+
+**Question 2 — Scope** (header `Scope`, single select):
 
 1. **Whole repository (Recommended)** — every phase over the whole tree at `HEAD`.
 2. **A diff** — a branch, PR number/URL, or commit range against a base ref. Ask for the base
    (`origin/main`, `origin/dev`, …) if not given; resolve a PR with `gh` when available.
 3. **One area** — a directory, module or set of files, every phase.
 
-Then one fixed confirmation, skipped only when the request already accepted it in words:
+Write the option labels and descriptions in English for this first question — the language
+is not known yet.
+
+Then one fixed confirmation, in the chosen language, skipped only when the request already
+accepted it in words (English wording; translate faithfully):
 
 > A full audit runs several agents in parallel and uses a significant amount of tokens and
 > time (typically 20–60 minutes). Start it?
@@ -202,9 +214,9 @@ head SHA. Say so when the loop stops converging and hand it to a person.
 `audit/RUN-<yyyymmdd-HHMM>/AUDIT-REPORT-<repo>-<short-sha>.md` (diff mode:
 `AUDIT-REPORT-<branch>-<short-sha>.md`).
 
-**It opens with a summary in `SUMMARY_LANGUAGE` that a person can read** — for someone who was
-not in this session and will not read further. No section numbers, no jargon, no counts in
-place of content. Four short parts:
+**It opens with a summary in `LANGUAGE` that a person can read** — for someone who was not in
+this session and will not read further. No section numbers, no jargon, no counts in place of
+content. Four short parts (headings translated into `LANGUAGE`):
 
 - **What was audited** — what the repository (or the change) is, in product terms, and what
   scope the audit had.
@@ -230,7 +242,8 @@ scenarios checked; test coverage gaps; business decisions required; manual verif
 required; **coverage limitations** (specialists used and missing, commands not run and why,
 areas not reached); recommended remediation order.
 
-Then print the terminal summary — counts first, then the same four parts, a line or two each:
+Then print the terminal summary in `LANGUAGE` — counts first, then the same four parts, a line
+or two each:
 
 ```text
 Verdict:
@@ -248,7 +261,7 @@ Do not modify any other file in the repository.
 
 ## Step 9 — Offer, then stop
 
-`audit/` never leaves the machine. Offer **once**:
+`audit/` never leaves the machine. Offer **once**, in `LANGUAGE`:
 
 > Post the summary as a comment on PR #<n> / the issue? It goes up under your GitHub account.
 

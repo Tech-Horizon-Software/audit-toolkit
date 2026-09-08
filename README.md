@@ -58,8 +58,10 @@ The quoted word is the first prompt — any text works, and you can name the sco
 the session opens idle: Claude Code does not currently auto-submit a plugin agent's
 `initialPrompt`, so just type something to begin.
 
-The agent asks one thing — the whole repository, a diff (branch / PR / commit range), or one
-area — and for confirmation that you accept a long multi-agent run. Then it works on its own.
+The agent asks two things up front — the language to talk in (English, Russian, Ukrainian,
+or any other you type) and the scope: the whole repository, a diff (branch / PR / commit
+range), or one area — then for confirmation that you accept a long multi-agent run. After that
+it works on its own.
 
 In a plain session, `/audit-toolkit:audit` follows the same procedure in the current context.
 For a full run the first form is better: it has its own turn budget and model.
@@ -93,8 +95,9 @@ finding cannot stay Critical or High.
 The verdict is one of `BLOCK`, `CHANGES REQUIRED`, `ACCEPTABLE WITH FOLLOW-UP`, `PASS`.
 `PASS` is possible only when the checks actually ran and passed.
 
-The summary at the top of the report and in the terminal is in English by default
-(`SUMMARY_LANGUAGE` in `skills/audit/SKILL.md`); ask for another language at the start of a run.
+The conversation, the summary at the top of the report and the terminal summary are in the
+language chosen at the start; the evidence sections of the report stay in English so it can be
+handed to anyone.
 
 ---
 
