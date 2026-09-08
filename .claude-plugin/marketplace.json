@@ -3,8 +3,8 @@
   "name": "audit-toolkit",
   "description": "Self-hosted marketplace for the audit-toolkit plugin.",
   "owner": {
-    "name": "serg-be-prog",
-    "email": "sergey.yurchenko.art@gmail.com"
+    "name": "Tech Horizon Software",
+    "email": "techhorizonsoftware@gmail.com"
   },
   "plugins": [
     {
