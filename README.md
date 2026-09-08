@@ -50,8 +50,13 @@ Update: `claude plugin update audit-toolkit`, then restart the session.
 From inside the repository you want audited:
 
 ```bash
-claude --agent audit-toolkit:audit-orchestrator
+claude --agent audit-toolkit:audit-orchestrator "start"
 ```
+
+The quoted word is the first prompt — any text works, and you can name the scope right there
+(`"whole repo"`, `"diff against origin/main"`, `"PR 42"`, `"src/payments only"`). Without it
+the session opens idle: Claude Code does not currently auto-submit a plugin agent's
+`initialPrompt`, so just type something to begin.
 
 The agent asks one thing — the whole repository, a diff (branch / PR / commit range), or one
 area — and for confirmation that you accept a long multi-agent run. Then it works on its own.
